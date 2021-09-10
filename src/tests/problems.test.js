@@ -6,7 +6,7 @@ import {
   analyse,
 } from "./problems";
 
-test("expects hello to equal olleh", () => {
+test("expect hello to equal olleh", () => {
   expect(reverseString("hello")).toBe("olleh");
 });
 
