@@ -1,5 +1,5 @@
-import Board from "../gamePieces/gameBoard";
-import Ship from "../gamePieces/ship";
+import Board from "../app/gamePieces/gameBoard";
+import Ship from "../app/gamePieces/ship";
 
 let board;
 let ship;
@@ -120,9 +120,7 @@ test("returns false if not all ships are sunk", () => {
   expect(board.checkForGameOver()).toBe(false);
 });
 
-
 test("board ships get setup and positioned in the correct places", () => {
-
   board.place("A0", "A1");
   board.place("B2", "B6");
   board.place("C7", "F7");
@@ -133,8 +131,6 @@ test("board ships get setup and positioned in the correct places", () => {
   expect(board.checkForShip("B2")).toEqual(true);
   expect(board.checkForShip("C7")).toEqual(true);
   expect(board.checkForShip("D7")).toEqual(true);
-  expect(board.checkForShip("J5")).toEqual(true)
+  expect(board.checkForShip("J5")).toEqual(true);
   expect(board.checkForShip("F1")).toEqual(true);
-
-  
-})
+});

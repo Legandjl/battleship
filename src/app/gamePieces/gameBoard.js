@@ -100,7 +100,7 @@ const Board = () => {
     }
     if (currentCell.status === statusMessages.unoccupied) {
       currentCell.hitStatus = true;
-      console.log("EMPTY CELL HIT")
+      console.log("EMPTY CELL HIT");
     } else {
       currentCell.ship.hit(currentCell.pos);
       currentCell.hitStatus = true;

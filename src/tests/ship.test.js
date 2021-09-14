@@ -1,4 +1,4 @@
-import Ship from "../gamePieces/ship";
+import Ship from "../app/gamePieces/ship";
 
 test("test ship hit in position 3", () => {
   const ship = Ship(3);

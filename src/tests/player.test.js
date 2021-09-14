@@ -1,5 +1,5 @@
-import { Player, ComputerPlayer } from "../gamePieces/player";
-import Board from "../gamePieces/gameBoard";
+import { Player, ComputerPlayer } from "../app/gamePieces/player";
+import Board from "../app/gamePieces/gameBoard";
 
 let player;
 let computerPlayer;

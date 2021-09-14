@@ -135,27 +135,27 @@ table {
 }
 
 #board {
-
-    width:500px;
-    height:500px;
-    border: solid 2px;
-    background-color: white;
-    justify-self: center;
-    align-self: center;
-    display: grid;
-    grid-template-rows: repeat(10, 1fr);
-    grid-template-columns: 1fr;
+  width: 500px;
+  height: 500px;
+  border: solid 2px;
+  background-color: white;
+  justify-self: center;
+  align-self: center;
+  display: grid;
+  grid-template-rows: repeat(10, 1fr);
+  grid-template-columns: 1fr;
 }
 
 .row {
-
-    display:grid;
-    grid-template-columns: repeat(10, 1fr);
-    grid-column: 1/-1;   
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  grid-column: 1/-1;
 }
 .cell {
-
-    height: 100%;
-    border: solid 1px;
+  height: 100%;
+  border: solid 1px;
 }
 
+.ship {
+  background-color: red;
+}
