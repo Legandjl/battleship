@@ -16,7 +16,7 @@ const Ship = (length) => {
     return false; // returns false if position already marked as hit, or if missed
   };
 
-  shipInterface.checkIfPosHit = (num) => shipStatus[num]
+  shipInterface.checkIfPosHit = (num) => shipStatus[num];
 
   shipInterface.isSunk = () => {
     let sunkStatus = true;

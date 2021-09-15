@@ -15,7 +15,7 @@ const generateBoard = () => {
   for (const [, value] of Object.entries(board)) {
     for (let x = 0; x < 10; x += 1) {
       value.push({
-        status: "unoccupied",
+        status: 'unoccupied',
         ship: {},
         pos: null,
         hitStatus: false,
@@ -26,8 +26,8 @@ const generateBoard = () => {
 };
 
 const parseCoord = (coord) => {
-  const row = coord.split("")[0].toLowerCase();
-  const cell = parseInt(coord.split("")[1], 10);
+  const row = coord.split('')[0].toLowerCase();
+  const cell = parseInt(coord.split('')[1], 10);
   return { row, cell };
 };
 

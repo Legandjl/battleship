@@ -1,14 +1,14 @@
-import Ship from "./ship";
-import { generateBoard, parseCoord } from "./helpers";
+import Ship from './ship';
+import { generateBoard, parseCoord } from './helpers';
 
-const statusMessages = { occupied: "occupied", unoccupied: "unoccupied" };
+const statusMessages = { occupied: 'occupied', unoccupied: 'unoccupied' };
 
 // helper functions to place ships in grid
 const placeHorizontal = (board, startCell, endCell, startRow) => {
   const boardEdit = board();
   for (let currentCell = startCell; currentCell <= endCell; currentCell += 1) {
     if (boardEdit[startRow][currentCell].status !== statusMessages.unoccupied) {
-      throw new Error("space occupied");
+      throw new Error('space occupied');
     }
   }
   const length = endCell - startCell + 1;
@@ -29,7 +29,7 @@ const placeVertical = (board, startRow, endRow, cell) => {
   for (const [key] of Object.entries(boardEdit)) {
     if (key >= startRow && key <= endRow) {
       if (boardEdit[key][cell].status !== statusMessages.unoccupied) {
-        throw new Error("space occupied");
+        throw new Error('space occupied');
       }
       length += 1;
     }
@@ -54,7 +54,7 @@ const checkShips = (board) => {
   for (const [key] of Object.entries(board)) {
     // eslint-disable-next-line no-loop-func
     board[key].forEach((item) => {
-      if (item.status === "occupied" && item.ship.isSunk() === false) {
+      if (item.status === 'occupied' && item.ship.isSunk() === false) {
         allSunk = false;
       }
     });
@@ -100,12 +100,12 @@ const Board = () => {
     }
     if (currentCell.status === statusMessages.unoccupied) {
       currentCell.hitStatus = true;
-      console.log("EMPTY CELL HIT");
+      console.log('EMPTY CELL HIT');
     } else {
       currentCell.ship.hit(currentCell.pos);
       currentCell.hitStatus = true;
       hitSuccesful = true;
-      console.log("SHIP HIT");
+      console.log('SHIP HIT');
     }
     return hitSuccesful;
   };
@@ -128,7 +128,7 @@ const Board = () => {
   boardInterface.checkForShip = (pos) => {
     const coord = parseCoord(pos);
     const cell = boardInterface.getBoard()[coord.row][coord.cell];
-    if (cell.status === "occupied") {
+    if (cell.status === 'occupied') {
       return true;
     }
     return false;
