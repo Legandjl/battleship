@@ -1,4 +1,4 @@
 import "./style.css";
-import {setup} from "./app/ui/initialSetup"
+import {setup} from "./app/ui/userInterface";
 
 setup();

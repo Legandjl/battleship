@@ -154,8 +154,18 @@ table {
 .cell {
   height: 100%;
   border: solid 1px;
+  display: grid;
+  align-items: center;
+  justify-items: center;
 }
 
 .ship {
+  background-color: black;
+  border-color: black;
+}
+
+.hit {
+
   background-color: red;
+  border-color: red;
 }

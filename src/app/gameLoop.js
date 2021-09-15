@@ -1,9 +1,5 @@
 import { Player, ComputerPlayer } from "./gamePieces/player";
-
-const player = Player();
-const computer = ComputerPlayer();
-
-const currentPlayer = player;
+import { shipHit } from "./ui/userInterface";
 
 let gridLock = false;
 
@@ -17,14 +13,32 @@ const toggleLock = () => {
   gridLock = false;
 };
 
-const gameController = () => {
+const GameController = (playerBoard, computerBoard) => {
+  const player = Player();
+  const computer = ComputerPlayer();
   let currentPlayer = player;
-  const playerTurn = () => {};
-  const computerTurn = () => {};
+  const computerTurn = () => {
+    if (computer.randomAttack(playerBoard)) {
+      shipHit("player", computer.getLastAttack());
+    }
+    currentPlayer = player;
+  };
+
+  const playerTurn = (e) => {
+    if (currentPlayer === ComputerPlayer) {
+      return;
+    }
+    if (player.attack(computerBoard, e.target.dataset.id)) {
+      e.target.classList.add("hit");
+      console.log(`${computerBoard.checkForGameOver()} Game over status`);
+    } else {
+      e.target.innerText = "X";
+    }
+    currentPlayer = ComputerPlayer;
+    computerTurn();
+  };
+
+  return { computerTurn, playerTurn };
 };
 
-const clickCell = (e) => {
-  console.log(e.target.dataset.id);
-};
-
-export { gameController, toggleLock, getGridLock, clickCell };
+export { GameController, toggleLock, getGridLock };

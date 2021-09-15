@@ -1,4 +1,8 @@
 {
     "liveServer.settings.port": 5501,
-    "jest.jestCommandLine": "npm test --"
+    "jest.jestCommandLine": "npm test --",
+    "editor.codeActionsOnSave": {
+        "source.fixAll.eslint": true
+      },
+      "eslint.validate": ["javascript"]
 }

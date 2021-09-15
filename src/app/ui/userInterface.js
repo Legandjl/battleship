@@ -1,21 +1,33 @@
-import { clickCell } from "../gameLoop";
-
+import { GameController } from "../gameLoop";
 import Board from "../gamePieces/gameBoard";
 
 const content = document.querySelector("#content");
+
 const playerGrid = document.createElement("div");
 playerGrid.dataset.type = "player";
 playerGrid.id = "board";
+
 const computerGrid = document.createElement("div");
 computerGrid.id = "board";
 computerGrid.dataset.type = "computer";
 
-const playerBoard = Board();
-const computerBoard = Board();
+let playerBoard = Board();
+let computerBoard = Board();
+
+const gameController = GameController(playerBoard, computerBoard);
 
 const setShipCell = (id) => {
   document.querySelector(`#player${id}`).classList.add("ship");
 };
+
+const shipHit = (player, id) => {
+  document.querySelector(`#${player}${id}`).classList.add("hit");
+};
+
+const markMiss = (player, id) => {
+
+  document.querySelector(`#${player}${id}`).innerText = "X";
+}
 
 const setupBoards = () => {
   playerBoard.place("A1", "A1");
@@ -23,12 +35,10 @@ const setupBoards = () => {
   playerBoard.place("E4", "H4");
   playerBoard.place("J2", "J7");
 
-  const board = playerBoard.getBoard();
-
+  const board = playerBoard.getBoard(); // we want the player to be able to see their ships
   // eslint-disable-next-line no-restricted-syntax
   for (const [key] of Object.entries(board)) {
     const currentRow = board[key];
-
     for (let x = 0; x < currentRow.length; x += 1) {
       if (currentRow[x].status === "occupied") {
         setShipCell(key.toUpperCase() + x);
@@ -53,7 +63,9 @@ const setupGrid = (grid, type) => {
       cell.dataset.id = key + x;
       cell.id = type + key + x;
       if (grid.dataset.type === "computer") {
-        cell.addEventListener("click", clickCell);
+        cell.addEventListener("click", (e) => {
+          gameController.playerTurn(e);
+        });
       }
       row.appendChild(cell);
     }
@@ -69,4 +81,10 @@ const setup = () => {
   setupBoards();
 };
 
-export { setupBoards, setup };
+const reset = () => {
+  playerBoard = Board();
+  computerBoard = Board();
+  // reset the board displays
+};
+
+export { setupBoards, setup, shipHit };
