@@ -2,19 +2,19 @@
   "liveServer.settings.port": 5501,
   "jest.jestCommandLine": "npm test --",
 
-  // These are all my auto-save configs
-  "editor.formatOnSave": true,
-  // turn it off for JS and JSX, we will do this via eslint
+  // settings.json
   "[javascript]": {
-    "editor.formatOnSave": false
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  "[javascriptreact]": {
-    "editor.formatOnSave": false
+  "[scss]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  // show eslint icon at bottom toolbar
-  "eslint.alwaysShowStatus": true,
-  // tell the ESLint plugin to run on save
-  "editor.codeActionsOnSave": {
-    "source.fixAll": true
-  }
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "editor.formatOnSave": true,
+  "eslint.alwaysShowStatus": true
 }
