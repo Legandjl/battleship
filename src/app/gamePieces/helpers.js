@@ -31,4 +31,21 @@ const parseCoord = (coord) => {
   return { row, cell };
 };
 
-export { generateBoard, parseCoord };
+const setupUnoccupied = () => {
+  const positions = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"];
+  const unoccupiedPositions = [];
+  positions.forEach((key) => {
+    const coords = [];
+    const currentCoords = [];
+    coords.push([key]);
+    for (let val = 0; val < 10; val += 1) {
+      currentCoords.push(val);
+    }
+    coords.push(currentCoords);
+    unoccupiedPositions.push(coords);
+  });
+
+  return unoccupiedPositions;
+};
+
+export { generateBoard, parseCoord, setupUnoccupied };

@@ -1,5 +1,5 @@
 import Ship from "./ship";
-import { generateBoard, parseCoord } from "./helpers";
+import { generateBoard, parseCoord, setupUnoccupied } from "./helpers";
 
 const statusMessages = { occupied: "occupied", unoccupied: "unoccupied" };
 // helper functions to place ships in grid
@@ -62,6 +62,9 @@ const checkShips = (board) => {
 };
 // main gameboard function
 const Board = () => {
+  let unoccupiedPositions = setupUnoccupied();
+
+  // unoccupiedPositions is in the form [[A], [0,1,2...]], [[B], [0,1,2...]]
   const boardInterface = {};
   let currentBoard = generateBoard();
   boardInterface.getBoard = () => currentBoard;
@@ -87,6 +90,28 @@ const Board = () => {
     }
     return currentBoard;
   };
+  boardInterface.placeRandom = (length) => {
+    const row = Math.floor(
+      Math.random(unoccupiedPositions.length) * unoccupiedPositions.length
+    );
+    const key = unoccupiedPositions[row][0][0]; // [A], [B], [C] ...
+    const values = unoccupiedPositions[row][1]; // [0,1,2,3...]
+    const positions = [];
+    for (let index = 0; index < values.length; index += 1) {
+      if (values[index] + length === values[index + length]) {
+        positions.push(values[index], values[index + length]);
+        break;
+      }
+    }
+    for (let index = positions[0]; index <= positions[1]; index += 1) {
+      values.forEach((val, i) => {
+        if (val === index) {
+          values.splice(i, 1);
+        }
+      });
+    }
+    boardInterface.place(key + positions[0], key + positions[1]);
+  };
 
   boardInterface.receiveAttack = (pos) => {
     let hitSuccesful = false; // will be true if a ship gets hit
@@ -98,12 +123,10 @@ const Board = () => {
     }
     if (currentCell.status === statusMessages.unoccupied) {
       currentCell.hitStatus = true;
-      console.log("EMPTY CELL HIT");
     } else {
       currentCell.ship.hit(currentCell.pos);
       currentCell.hitStatus = true;
       hitSuccesful = true;
-      console.log("SHIP HIT");
     }
     return hitSuccesful;
   };

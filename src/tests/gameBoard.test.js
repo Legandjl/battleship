@@ -134,3 +134,7 @@ test("board ships get setup and positioned in the correct places", () => {
   expect(board.checkForShip("J5")).toEqual(true);
   expect(board.checkForShip("F1")).toEqual(true);
 });
+
+test("ships can be randomly places", () => {
+  expect(board.placeRandom()).toBe(true);
+});

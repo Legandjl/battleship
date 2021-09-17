@@ -28,12 +28,11 @@ const markMiss = (player, id) => {
 };
 
 const setupBoards = (playerBoard, computerBoard) => {
-  playerBoard.place("A1", "A1");
-  playerBoard.place("C3", "C7");
-  playerBoard.place("E4", "H4");
-  playerBoard.place("J2", "J7");
-
   const board = playerBoard.getBoard(); // we want the player to be able to see their ships
+  for (let x = 0; x < 5; x += 1) {
+    playerBoard.placeRandom(x);
+  }
+
   // eslint-disable-next-line no-restricted-syntax
   for (const [key] of Object.entries(board)) {
     const currentRow = board[key];
@@ -43,10 +42,9 @@ const setupBoards = (playerBoard, computerBoard) => {
       }
     }
   }
-  computerBoard.place("A0", "A1");
-  computerBoard.place("C3", "C7");
-  computerBoard.place("E4", "H4");
-  computerBoard.place("J2", "J7");
+  for (let x = 0; x < 5; x += 1) {
+    computerBoard.placeRandom(x);
+  }
 };
 
 const infoDisplay = (text) => {
