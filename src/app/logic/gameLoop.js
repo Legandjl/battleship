@@ -17,9 +17,7 @@ const GameController = (playerBoard, computerBoard) => {
     if (gameoverStatus) {
       return;
     }
-
     infoDisplay("Current player: Computer");
-
     setTimeout(() => {
       if (computer.randomAttack(playerBoard)) {
         shipHit("player", computer.getLastAttack());

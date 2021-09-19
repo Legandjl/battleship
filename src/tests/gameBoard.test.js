@@ -135,6 +135,23 @@ test("board ships get setup and positioned in the correct places", () => {
   expect(board.checkForShip("F1")).toEqual(true);
 });
 
-test("ships can be randomly places", () => {
-  expect(board.placeRandom()).toBe(true);
+test("should not throw an error if adding a ship randomly", () => {
+  expect(() => {
+    for (let x = 0; x < 5; x += 1) {
+      if (x % 2 === 0) {
+        board.placeRandomHorizontal(x);
+      } else {
+        board.placeRandomVertical(x);
+      }
+    }
+  }).not.toThrow("space occupied");
+});
+
+test("should return false if trying to place in an occupied spot", () => {
+  board.place("A1", "B1");
+  expect(board.tryToPlace("A1", "B1")).toBe(false);
+});
+
+test("should return true if placing in a non occupied spot", () => {
+  expect(board.tryToPlace("A1", "B1")).toBe(true);
 });

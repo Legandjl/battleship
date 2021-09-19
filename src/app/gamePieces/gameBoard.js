@@ -1,5 +1,5 @@
 import Ship from "./ship";
-import { generateBoard, parseCoord, setupUnoccupied } from "./helpers";
+import { generateBoard, parseCoord } from "./helpers";
 
 const statusMessages = { occupied: "occupied", unoccupied: "unoccupied" };
 // helper functions to place ships in grid
@@ -62,9 +62,6 @@ const checkShips = (board) => {
 };
 // main gameboard function
 const Board = () => {
-  let unoccupiedPositions = setupUnoccupied();
-
-  // unoccupiedPositions is in the form [[A], [0,1,2...]], [[B], [0,1,2...]]
   const boardInterface = {};
   let currentBoard = generateBoard();
   boardInterface.getBoard = () => currentBoard;
@@ -90,27 +87,52 @@ const Board = () => {
     }
     return currentBoard;
   };
-  boardInterface.placeRandom = (length) => {
-    const row = Math.floor(
-      Math.random(unoccupiedPositions.length) * unoccupiedPositions.length
+
+  boardInterface.tryToPlace = (coord1, coord2) => {
+    try {
+      boardInterface.place(coord1, coord2);
+      return true;
+    } catch (error) {
+      return false;
+    }
+  };
+
+  boardInterface.placeRandomHorizontal = (size) => {
+    let coords = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"];
+    const cells = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+    const cellIndex = Math.floor(
+      Math.random() * cells.slice(0, cells.length - size).length
     );
-    const key = unoccupiedPositions[row][0][0]; // [A], [B], [C] ...
-    const values = unoccupiedPositions[row][1]; // [0,1,2,3...]
-    const positions = [];
-    for (let index = 0; index < values.length; index += 1) {
-      if (values[index] + length === values[index + length]) {
-        positions.push(values[index], values[index + length]);
-        break;
+
+    for (let x = 0; x < 9; x += 1) {
+      const coordIndex = Math.floor(Math.random() * coords.length);
+      if (
+        boardInterface.tryToPlace(
+          coords[coordIndex] + cells[cellIndex],
+          coords[coordIndex] + cells[cellIndex + size]
+        )
+      ) {
+        return;
       }
+      coords = coords.splice(cellIndex, 1);
     }
-    for (let index = positions[0]; index <= positions[1]; index += 1) {
-      values.forEach((val, i) => {
-        if (val === index) {
-          values.splice(i, 1);
-        }
-      });
+  };
+
+  boardInterface.placeRandomVertical = (size) => {
+    const coords = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"];
+    let cells = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+    const coordIndex = Math.floor(
+      Math.random() * coords.slice(0, coords.length - size).length
+    );
+    const coord1 = coords[coordIndex];
+    const coord2 = coords[coordIndex + size];
+    for (let x = 0; x < 9; x += 1) {
+      const cellIndex = Math.floor(Math.random() * cells.length);
+      if (boardInterface.tryToPlace(coord1 + cellIndex, coord2 + cellIndex)) {
+        return;
+      }
+      cells = cells.splice(cellIndex, 1);
     }
-    boardInterface.place(key + positions[0], key + positions[1]);
   };
 
   boardInterface.receiveAttack = (pos) => {
@@ -145,7 +167,6 @@ const Board = () => {
     }
     return `cell ${pos} ${statusMessages.unoccupied}`;
   };
-
   boardInterface.checkForShip = (pos) => {
     const coord = parseCoord(pos);
     const cell = boardInterface.getBoard()[coord.row][coord.cell];
@@ -154,7 +175,6 @@ const Board = () => {
     }
     return false;
   };
-
   boardInterface.checkForGameOver = () => checkShips(boardInterface.getBoard());
 
   return boardInterface;
