@@ -35,8 +35,8 @@ const setupBoards = (playerBoard, computerBoard) => {
       playerBoard.placeRandomHorizontal(x);
       computerBoard.placeRandomHorizontal(x);
     } else {
-      playerBoard.placeRandomVertical(x);
       computerBoard.placeRandomVertical(x);
+      playerBoard.placeRandomVertical(x);
     }
   }
   // eslint-disable-next-line no-restricted-syntax

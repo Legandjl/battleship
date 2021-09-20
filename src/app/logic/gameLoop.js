@@ -8,15 +8,11 @@ import {
 } from "../ui/userInterface";
 
 const GameController = (playerBoard, computerBoard) => {
-  let gameoverStatus = false;
   const player = Player();
   const computer = ComputerPlayer();
   let currentPlayer = player;
 
   const computerTurn = () => {
-    if (gameoverStatus) {
-      return;
-    }
     infoDisplay("Current player: Computer");
     setTimeout(() => {
       if (computer.randomAttack(playerBoard)) {
@@ -25,20 +21,23 @@ const GameController = (playerBoard, computerBoard) => {
         markMiss("player", computer.getLastAttack());
       }
       currentPlayer = player;
-      gameoverStatus = playerBoard.checkForGameOver();
-      if (gameoverStatus) {
+
+      if (playerBoard.checkForGameOver()) {
         setGameOver("computer");
+        return;
       }
+
       infoDisplay("Your turn");
-    }, 1000);
+    }, 1);
   };
 
   const playerTurn = (e) => {
-    if (
-      e.target.dataset.status === "hit" ||
-      gameoverStatus ||
-      currentPlayer === ComputerPlayer
-    ) {
+    if (e.target.dataset.status === "hit" || currentPlayer === ComputerPlayer) {
+      return;
+    }
+
+    if (playerBoard.checkForGameOver()) {
+      setGameOver("Computer");
       return;
     }
 
@@ -49,12 +48,17 @@ const GameController = (playerBoard, computerBoard) => {
     }
     e.target.dataset.status = "hit";
     currentPlayer = ComputerPlayer;
-    gameoverStatus = computerBoard.checkForGameOver();
-    if (gameoverStatus) {
+
+    if (computerBoard.checkForGameOver()) {
       setGameOver("player");
       return;
     }
+
     computerTurn();
+
+    if (playerBoard.checkForGameOver()) {
+      setGameOver("Computer");
+    }
   };
 
   return { computerTurn, playerTurn };
