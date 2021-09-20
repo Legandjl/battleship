@@ -89,12 +89,17 @@ const setup = () => {
 
   currentTurn.innerText = "Click a cell to begin";
   resetButton.addEventListener("click", () => {
-    document.querySelector("#content").innerHTML = "";
-    computerGrid.innerHTML = "";
-    playerGrid.innerHTML = "";
-    setup();
+    const cells = document.querySelectorAll(".cell");
+    cells.forEach((cell) => {
+      cell.classList.remove("ship");
+      cell.classList.remove("hit");
+      const currentCell = cell;
+      currentCell.innerText = "";
+    });
+    playerBoard.resetBoard();
+    computerBoard.resetBoard();
+    setupBoards(playerBoard, computerBoard);
   });
-
   setupGrid(playerGrid, "player", gameController);
   setupGrid(computerGrid, "computer", gameController);
   content.appendChild(playerGrid);

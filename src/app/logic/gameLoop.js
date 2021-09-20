@@ -28,7 +28,7 @@ const GameController = (playerBoard, computerBoard) => {
       }
 
       infoDisplay("Your turn");
-    }, 1);
+    }, 1000);
   };
 
   const playerTurn = (e) => {

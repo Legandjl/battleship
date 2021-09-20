@@ -177,6 +177,10 @@ const Board = () => {
   };
   boardInterface.checkForGameOver = () => checkShips(boardInterface.getBoard());
 
+  boardInterface.resetBoard = () => {
+    currentBoard = generateBoard();
+  };
+
   return boardInterface;
 };
 
